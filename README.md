@@ -7,7 +7,7 @@
 	+ Display my past bicep curl workouts.
 + Assumes knowledge of basic lifting principles
 	+ Will not suggest full workouts
-	+ Will not include features found elsewhere
+	+ Will not include features easily found elsewhere
 		+ No timer
 		+ No tracking diet
 		+ Does not attempt to have features for everyone
