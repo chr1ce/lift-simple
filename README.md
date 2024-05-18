@@ -1,4 +1,4 @@
-## Lift:simple 
+## Lift Simple
 
 ### A simple weightlifting tracker and recommendation tool
 
