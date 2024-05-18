@@ -3,8 +3,8 @@
 ### A simple weightlifting tracker and recommendation tool
 
 + Query for data quickly
-	+ "How long has it been since my last deadlift PR?"
-	+ "Display my past bicep curl workouts."
+	+ Find how long it has been since your last deadlift PR
+	+ Display your past bicep curl workouts
 + Assumes knowledge of basic lifting principles
 	+ Will not suggest full workouts
 	+ Will not include features easily found elsewhere
