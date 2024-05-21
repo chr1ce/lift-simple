@@ -35,6 +35,7 @@ int main() {
 		// Input data buffer for storage
 
 		char data[30];
+		char input_wkt[5];
 
 
 		if (strcmp(input, "help") == 0) {
@@ -53,7 +54,17 @@ int main() {
 				"ohp: Overhead Press\n");
 				
 		} else if (strncmp(input, "w add", 5) == 0) {
-			
+			for (int i = 0; i < 5; i++) {
+					input_wkt[i] = input[6 + i];
+			}
+			for (int i = 0; i < len_wkts; i++) {
+				int len_wkt = sizeof(wkts[i]) / sizeof(wkts[i][0]);
+				
+				if (strncmp(wkts[i], input_wkt, 5) == 0) {
+					// Save the data to file
+				}
+			}
+			printw("\nAdding to: %s", input_wkt);
 			printw("\nEnter workout data (yyyy-mm-dd-weight-reps): ");
 			getnstr(data, 30);
 
