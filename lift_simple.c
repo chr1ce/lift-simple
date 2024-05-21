@@ -1,3 +1,4 @@
+#include "lift_simple.h"
 #include <ncurses.h>
 #include <string.h>
 
@@ -5,40 +6,71 @@ int main() {
 	initscr();
 
 	printw("Welcome to Lift Simple!\n");
-	printw("Input commands in the form given by /help.\n");
-	printw(":: ");
+	printw("Input commands in the form given by $help.\n");
 
-	refresh();
+	while (TRUE) {
+		echo();
+		printw("\n:: ");
 
-	
-	char input[20];
-	getnstr(input, 20);
+		refresh();
 
-	if (input == NULL) {
-		// Would be best to handle with reprompting
-		return 0;
-	}
-	
-	// TODO: Parse inputs and assign actions to commands
-	
-	if (strcmp(input, "bic -h") == 0) {
-		printw("[Bi]cep [C]urls\n");
-	}
+			
+		char input[20];
+		getnstr(input, 20);
+
+		if (strcmp(input, "") == 0) {
+			printw("Quit the application?\n([q] to quit || any key to continue): ");
+			refresh();
+			int c = getch();
+			if (c == 'q') {
+				break;
+			} else {
+				continue;
+			}
+		}
+		if (strcmp(input, "quit") == 0) {
+			break;
+		}
+
+		// Input data buffer for storage
+
+		char data[30];
+
+
+		if (strcmp(input, "help") == 0) {
+			printw("%s", help_intro_str);
+
+			printw("\nCurrent commands:\n"
+				"help: Help and documentation\n"
+				"quit: Quit the application immediately\n"
+				"w: Workout data management and information\n"
+				"w add {wkt}: Add specified workout type to storage\n"
+				"Workout types:\n"
+				"dl: Deadlift\n"
+				"bp: Bench Press\n"
+				"bbs: Barbell Squat\n"
+				"bbr: Barbell Row\n"
+				"ohp: Overhead Press\n");
+				
+		} else if (strncmp(input, "w add", 5) == 0) {
+			
+			printw("\nEnter workout data (yyyy-mm-dd-weight-reps): ");
+			getnstr(data, 30);
+
+		} else if (strncmp(input, "w rm", 4) == 0) {
+			printw("\nEnter workout date: ");
+			getnstr(data, 30);
+		}
+
+		refresh();
 		
-	if (strcmp(input, "help") == 0) {
-		printw("Each command is represented by a 3-5 letter string. "
-			"You can add a -h flag for help and information on using "
-			"a commmand like $w -h (which gives help on the "
-			"commands associated with managing workout data.)\n");
-		printw("Current commands:\n"
-			"help: Help and documentation\n"
-			"w: Workout data and information\n"
-			"bic: Bicep Curls\n");
 	}
-	refresh();
 
-	getch();
 	endwin();
-	
+
 	return 0;
+}
+
+int store_workout_to_file(char* data, enum Workout workout) {
+
 }
