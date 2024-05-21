@@ -46,7 +46,7 @@ int main() {
 				"quit: Quit the application immediately\n"
 				"w: Workout data management and information\n"
 				"w add {wkt}: Add specified workout type to storage\n"
-				"Workout types:\n"
+				"\nWorkout types:\n"
 				"dl: Deadlift\n"
 				"bp: Bench Press\n"
 				"bbs: Barbell Squat\n"
@@ -65,7 +65,7 @@ int main() {
 				}
 			}
 			printw("\nAdding to: %s", input_wkt);
-			printw("\nEnter workout data (yyyy-mm-dd-weight-reps): ");
+			printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
 			getnstr(data, 30);
 
 		} else if (strncmp(input, "w rm", 4) == 0) {
