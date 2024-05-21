@@ -10,7 +10,6 @@ all: $(EXE)
 
 $(EXE): $(OBJECTS)
 	$(LD) $(OBJECTS) -o $(EXE) $(LIBS)
-
-%.o: %.CFLAGS
+	./$(EXE)
 
 lift_simple.o: lift_simple.c lift_simple.h
