@@ -19,8 +19,3 @@
 determines recommended weight and repetitions for a given exercise
 	+ Can set what percent increase you expect to see from yourself
 	+ Can set how many repetitions the exercise should be
-
-### Uses ncurses library in C
-+ Cozy environment in terminal
-+ Easy text-based input
-+ Familiar command line interface
