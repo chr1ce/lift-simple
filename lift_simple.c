@@ -6,6 +6,7 @@ int main() {
 	initscr();
 	setscrreg(0, 50);
 	scrollok(stdscr, true);
+	immedok(stdscr, true);
 
 	printw("Welcome to Lift Simple!\n");
 	printw("Input commands in the form given by $help.\n");
@@ -41,6 +42,8 @@ int main() {
 
 		char data[30];
 		char input_wkt[5];
+		enum Workout workout;
+		int wkt_exists = 0;
 
 
 		if (strcmp(input, "help") == 0) {
@@ -66,13 +69,17 @@ int main() {
 				int len_wkt = sizeof(wkts[i]) / sizeof(wkts[i][0]);
 				
 				if (strncmp(wkts[i], input_wkt, 5) == 0) {
-					// Save the data to file
+					workout = i;
+					wkt_exists = 1;
+					break;
 				}
 			}
-			printw("\nAdding to: %s", input_wkt);
-			printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
-			getnstr(data, 30);
-
+			if (wkt_exists) {
+				printw("\nAdding to: %s", input_wkt);
+				printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
+				getnstr(data, 30);
+				// store_workout_to_file(data, workout);
+			}
 		} else if (strncmp(input, "w rm", 4) == 0) {
 			printw("\nEnter workout date: ");
 			getnstr(data, 30);
