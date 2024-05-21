@@ -4,12 +4,15 @@ int main(void);
 
 
 enum Workout {
-    BENCH_PRESS,
     DEADLIFT,
+    BENCH_PRESS,
     BARBELL_SQUAT,
-    OVERHEAD_PRESS,
-    BARBELL_ROW
+    BARBELL_ROW,
+    OVERHEAD_PRESS
 };
+
+const char* wkts[] = {"dl", "bp", "bbs", "bbr", "ohp"};
+int len_wkts = sizeof(wkts) / sizeof(wkts[0]);
 
 //Should return 1 for success, 0 for failure
 
