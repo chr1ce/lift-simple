@@ -4,6 +4,8 @@
 
 int main() {
 	initscr();
+	setscrreg(0, 50);
+	scrollok(stdscr, true);
 
 	printw("Welcome to Lift Simple!\n");
 	printw("Input commands in the form given by $help.\n");
@@ -30,6 +32,9 @@ int main() {
 		}
 		if (strcmp(input, "quit") == 0) {
 			break;
+		}
+		if (strcmp(input, "clear") == 0) {
+			clear();
 		}
 
 		// Input data buffer for storage
