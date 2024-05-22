@@ -19,7 +19,5 @@ char** csv_line_to_arr(char* line);
 int* read_maxes();
 int write_maxes(int* maxes);
 
-const char* help_intro_str = "\nEach command is represented by a 3-5 letter string. "
-                           "You can add a -h flag for help and information on " 
-                           "a commmand like $w -h (which gives help on the "
-                           "commands associated with managing workout data).\n";
+const char* help_intro_str = "\nEach workout is represented by a 2-5 letter string."
+                             "\nCommands are given below.\n";
