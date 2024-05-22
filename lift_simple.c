@@ -1,5 +1,6 @@
 #include "lift_simple.h"
 #include <ncurses.h>
+#include <stdlib.h>
 #include <string.h>
 
 int main() {
@@ -54,6 +55,7 @@ int main() {
 				"quit: Quit the application immediately\n"
 				"w: Workout data management and information\n"
 				"w add {wkt}: Add specified workout type to storage\n"
+				"{wkt}: View max weight for specified workout\n"
 				"\nWorkout types:\n"
 				"dl: Deadlift\n"
 				"bp: Bench Press\n"
@@ -65,9 +67,7 @@ int main() {
 			for (int i = 0; i < 5; i++) {
 					input_wkt[i] = input[6 + i];
 			}
-			for (int i = 0; i < len_wkts; i++) {
-				int len_wkt = sizeof(wkts[i]) / sizeof(wkts[i][0]);
-				
+			for (int i = 0; i < len_wkts; i++) {				
 				if (strncmp(wkts[i], input_wkt, 5) == 0) {
 					workout = i;
 					wkt_exists = 1;
@@ -78,11 +78,29 @@ int main() {
 				printw("\nAdding to: %s", input_wkt);
 				printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
 				getnstr(data, 30);
-				// store_workout_to_file(data, workout);
+				write_workout_to_file(data, workout);
 			}
 		} else if (strncmp(input, "w rm", 4) == 0) {
 			printw("\nEnter workout date: ");
 			getnstr(data, 30);
+			// Search through files for workout
+		} else{
+			for (int i = 0; i < len_wkts; i++) {
+				int len_wkt = 3;
+
+				if (strncmp(wkts[i], input, len_wkt) == 0) {
+					workout = i;
+					wkt_exists = 1;
+					break;
+				}
+			}
+			if (wkt_exists) {
+				int* maxarr = read_maxes();
+
+				printw("\nMax weight for %s: ", wkts[workout]);
+				printw("%d", maxarr[workout]);
+				free(maxarr);
+			}
 		}
 
 		refresh();
@@ -94,6 +112,83 @@ int main() {
 	return 0;
 }
 
-int store_workout_to_file(char* data, enum Workout workout) {
+int* read_maxes() {
+	int* maxarr = malloc(len_wkts * sizeof(int));
+	if (maxarr == NULL) {
+		exit(EXIT_FAILURE);
+	}
+	FILE* mp = fopen("maxes.txt", "r");
+	if (mp == NULL) {
+		FILE* maxesf = fopen("maxes.txt", "a");
+		for (int i = 0; i < len_wkts; i++) {
+			fprintf(maxesf, "0\n");
+		}
+		fclose(maxesf);
+	} else {
+		int count = 0;
+		char line[6];
+		while (fgets(line, sizeof line, mp) != NULL)
+		{
+			maxarr[count] = atoi(line);
+			count++;
+		}
 
+		fclose(mp);
+	}
+	return maxarr;
+}
+
+int write_maxes(int* maxes) {
+	FILE* fp = fopen("maxes.txt", "w");
+	for (int i = 0; i < len_wkts; i++) {
+		fprintf(fp, "%d\n", maxes[i]);
+	}
+	fclose(fp);
+	return 0;
+}
+
+char** csv_line_to_arr(char* line) {
+	char *pch;
+	char** arr = malloc(sizeof(char*) * 5);
+	if (arr == NULL) {
+		exit(EXIT_FAILURE);
+	}
+	int i = 0;
+    pch = strtok(line," ,");
+    while (pch != NULL) {
+        arr[i] = pch;
+        pch = strtok(NULL, " ,");
+		i++;
+    }
+	arr[4] = "\n";
+	return arr;
+}
+
+int write_workout_to_file(char* data, enum Workout workout) {
+	FILE* fp;
+	char copy[30];
+	strcpy(copy, data);
+	char** arrdata = csv_line_to_arr(copy);
+	int* maxarr = read_maxes();
+
+	int wl = atoi(arrdata[1]);
+
+	if (wl > maxarr[workout]) {
+		maxarr[workout] = wl;
+	}
+	write_maxes(maxarr);
+
+	free(arrdata);
+	free(maxarr);
+
+	char file_name[30];
+
+	sprintf(file_name, "%s-data.txt", wkts[workout]);
+	fp = fopen(file_name, "a");
+	fprintf(fp, strcat(data, "\n"));
+	fclose(fp);
+
+	printw("\nSuccessfully saved.\n");
+
+	return 0;
 }
