@@ -7,6 +7,9 @@ OBJECTS = $(SOURCES:%.c=%.o)
 
 default: all
 all: $(EXE)
+gdb:
+	$(LD) $(OBJECTS) -o $(EXE) $(LIBS)
+	gdb ./$(EXE)
 
 $(EXE): $(OBJECTS)
 	$(LD) $(OBJECTS) -o $(EXE) $(LIBS)

@@ -95,30 +95,11 @@ int main() {
 				}
 			}
 			if (wkt_exists) {
-				FILE* fp = fopen("maxes.txt", "r");
+				int* maxarr = read_maxes();
 
-				if (fp == NULL) {
-					printw("You haven't recorded any lifts yet!");
-				} else {
-					int count = 0;
-					int max;
-					char line[6];
-					while (fgets(line, sizeof line, fp) != NULL)
-					{
-						if (count == workout)
-						{
-							max = atoi(line);
-						}
-						else
-						{
-							count++;
-						}
-					}
-					fclose(fp);
-
-					printw("\nMax weight for %s: ", input_wkt);
-					printw("%d", max);
-				}
+				printw("\nMax weight for %s: ", wkts[workout]);
+				printw("%d", maxarr[workout]);
+				free(maxarr);
 			}
 		}
 
@@ -132,8 +113,10 @@ int main() {
 }
 
 int* read_maxes() {
-	int maxarr[len_wkts];
-
+	int* maxarr = malloc(len_wkts * sizeof(int));
+	if (maxarr == NULL) {
+		exit(EXIT_FAILURE);
+	}
 	FILE* mp = fopen("maxes.txt", "r");
 	if (mp == NULL) {
 		FILE* maxesf = fopen("maxes.txt", "a");
@@ -152,27 +135,51 @@ int* read_maxes() {
 
 		fclose(mp);
 	}
+	return maxarr;
 }
 
-int write_maxes() {
-
+int write_maxes(int* maxes) {
+	FILE* fp = fopen("maxes.txt", "w");
+	for (int i = 0; i < len_wkts; i++) {
+		fprintf(fp, "%d\n", maxes[i]);
+	}
+	fclose(fp);
+	return 0;
 }
 
-int* csv_line_to_arr(char* line) {
+char** csv_line_to_arr(char* line) {
 	char *pch;
-	char** arr;
+	char** arr = malloc(sizeof(char*) * 5);
+	if (arr == NULL) {
+		exit(EXIT_FAILURE);
+	}
 	int i = 0;
-    pch = strtok (line," ,");
-    while (pch = NULL) {
+    pch = strtok(line," ,");
+    while (pch != NULL) {
         arr[i] = pch;
-        pch = strtok (NULL, " ,");
+        pch = strtok(NULL, " ,");
 		i++;
     }
+	arr[4] = "\n";
+	return arr;
 }
 
 int write_workout_to_file(char* data, enum Workout workout) {
 	FILE* fp;
-	int arrdata[] = csv_line_to_arr(data);
+	char copy[30];
+	strcpy(copy, data);
+	char** arrdata = csv_line_to_arr(copy);
+	int* maxarr = read_maxes();
+
+	int wl = atoi(arrdata[1]);
+
+	if (wl > maxarr[workout]) {
+		maxarr[workout] = wl;
+	}
+	write_maxes(maxarr);
+
+	free(arrdata);
+	free(maxarr);
 
 	char file_name[30];
 
@@ -180,6 +187,8 @@ int write_workout_to_file(char* data, enum Workout workout) {
 	fp = fopen(file_name, "a");
 	fprintf(fp, strcat(data, "\n"));
 	fclose(fp);
+
+	printw("\nSuccessfully saved.\n");
 
 	return 0;
 }
