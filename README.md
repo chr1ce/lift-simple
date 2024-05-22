@@ -25,3 +25,8 @@ determines recommended weight and repetitions for a given exercise
 + Cozy environment in terminal
 + Easy text-based input
 + Familiar command line interface
+
+### Setup
+
++ Just download the liftspl executable and run it with ./liftspl in the directory
+you place it in.
