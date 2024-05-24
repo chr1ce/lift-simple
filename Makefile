@@ -9,22 +9,19 @@ default: all
 all: $(EXE)
 
 run:
-	$(EXE)
-	./$(EXE)
-
-clean:
-	$(EXE)
 	./$(EXE)
 	
 gdb:
-	$(EXE)
 	gdb ./$(EXE)
 
 valgrind:
-	$(EXE)
 	valgrind ./$(EXE)
 
 $(EXE): $(OBJECTS)
 	$(LD) $(OBJECTS) -o $(EXE) $(LIBS)
+
+clean:
+	rm -f $(EXE)
+	rm -f $(OBJECTS)
 
 lift_simple.o: lift_simple.c lift_simple.h
