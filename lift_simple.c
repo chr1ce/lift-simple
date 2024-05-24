@@ -8,17 +8,17 @@ int main() {
 	setscrreg(0, 50);
 	scrollok(stdscr, true);
 	immedok(stdscr, true);
+	keypad(stdscr, TRUE);
 
 	printw("Welcome to Lift Simple!\n");
 	printw("Input commands in the form given by $help.\n");
 
-	while (TRUE) {
+	while (1) {
 		echo();
 		printw("\n:: ");
 
 		refresh();
-
-			
+		
 		char input[20];
 		getnstr(input, 20);
 
@@ -32,12 +32,28 @@ int main() {
 				continue;
 			}
 		}
+
 		if (strcmp(input, "quit") == 0) {
 			break;
-		}
-		if (strcmp(input, "clear") == 0) {
+		} else if (strcmp(input, "clear") == 0) {
 			clear();
-		}
+		} else if (strcmp(input, "v") == 0) {
+			noecho();
+			while (1) {
+				int c = getch();
+				if (c == 'q') {
+					break;
+				}
+				switch (c) {
+					case KEY_UP:
+						scrl(-1);
+						break;
+					case KEY_DOWN:
+						scrl(1);
+						break;
+				}
+			}
+		}	
 
 		// Input data buffer for storage
 
@@ -52,6 +68,7 @@ int main() {
 
 			printw("\nCurrent commands:\n"
 				"help: Help and documentation\n"
+				"v: Enter view mode, enabling scrolling, q to exit\n"
 				"quit: Quit the application immediately\n"
 				"w: Workout data management and information\n"
 				"w add {wkt}: Add specified workout type to storage\n"
@@ -185,7 +202,7 @@ int write_workout_to_file(char* data, enum Workout workout) {
 
 	sprintf(file_name, "%s-data.txt", wkts[workout]);
 	fp = fopen(file_name, "a");
-	fprintf(fp, strcat(data, "\n"));
+	fprintf(fp, "%s\n", data);
 	fclose(fp);
 
 	printw("\nSuccessfully saved.\n");
