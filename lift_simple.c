@@ -37,23 +37,7 @@ int main() {
 			break;
 		} else if (strcmp(input, "clear") == 0) {
 			clear();
-		} else if (strcmp(input, "v") == 0) {
-			noecho();
-			while (1) {
-				int c = getch();
-				if (c == 'q') {
-					break;
-				}
-				switch (c) {
-					case KEY_UP:
-						scrl(-1);
-						break;
-					case KEY_DOWN:
-						scrl(1);
-						break;
-				}
-			}
-		}	
+		}
 
 		// Input data buffer for storage
 
@@ -68,7 +52,6 @@ int main() {
 
 			printw("\nCurrent commands:\n"
 				"help: Help and documentation\n"
-				"v: Enter view mode, enabling scrolling, q to exit\n"
 				"quit: Quit the application immediately\n"
 				"w: Workout data management and information\n"
 				"w add {wkt}: Add specified workout type to storage\n"
