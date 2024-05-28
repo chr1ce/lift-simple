@@ -44,7 +44,11 @@ int main() {
 		char data[30];
 		char input_wkt[5];
 		enum Workout workout;
-		int wkt_exists = 0;
+		char input_copy[20];
+		strcpy(input_copy, input);
+		
+
+		char** input_tokens = tokenize_input(input_copy);
 
 
 		if (strcmp(input, "help") == 0) {
@@ -54,7 +58,8 @@ int main() {
 				"help: Help and documentation\n"
 				"quit: Quit the application immediately\n"
 				"w: Workout data management and information\n"
-				"w add {wkt}: Add specified workout type to storage\n"
+				"w add {wkt}: Add specified workout type to storage\n"\
+				"w rec {wkt} {reps}: Get recommended weight for workout"
 				"{wkt}: View max weight for specified workout\n"
 				"\nWorkout types:\n"
 				"dl: Deadlift\n"
@@ -70,36 +75,44 @@ int main() {
 			for (int i = 0; i < len_wkts; i++) {				
 				if (strncmp(wkts[i], input_wkt, 5) == 0) {
 					workout = i;
-					wkt_exists = 1;
+					printw("\nAdding to: %s", input_wkt);
+					printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
+					getnstr(data, 30);
+					write_workout_to_file(data, workout);
 					break;
 				}
-			}
-			if (wkt_exists) {
-				printw("\nAdding to: %s", input_wkt);
-				printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
-				getnstr(data, 30);
-				write_workout_to_file(data, workout);
 			}
 		} else if (strncmp(input, "w rm", 4) == 0) {
 			printw("\nEnter workout date: ");
 			getnstr(data, 30);
 			// Search through files for workout
-		} else{
+		} else if (strncmp(input, "w rec", 5) == 0) {
+			int reps = atoi(input_tokens[3]);
+			char* input_workout = input_tokens[2];
+			for (int i = 0; i < len_wkts; i++) {				
+				if (strcmp(wkts[i], input_workout) == 0) {
+					workout = i;
+					int* maxarr = read_maxes();
+					int rec_weight = what_weight(maxarr[workout], reps);
+					printw("\nRecommended weight for %d repetitions: ", reps);
+					printw("%d", rec_weight);
+					free(maxarr);
+					break;
+				}
+			}
+		} else {
 			for (int i = 0; i < len_wkts; i++) {
 				int len_wkt = 3;
 
 				if (strncmp(wkts[i], input, len_wkt) == 0) {
 					workout = i;
-					wkt_exists = 1;
+					int* maxarr = read_maxes();
+
+					printw("\nMax weight for %s: ", wkts[workout]);
+					printw("%d", maxarr[workout]);
+					free(maxarr);
 					break;
 				}
-			}
-			if (wkt_exists) {
-				int* maxarr = read_maxes();
-
-				printw("\nMax weight for %s: ", wkts[workout]);
-				printw("%d", maxarr[workout]);
-				free(maxarr);
 			}
 		}
 
@@ -110,6 +123,38 @@ int main() {
 	endwin();
 
 	return 0;
+}
+
+int what_weight(int max, int reps) {
+	if (reps <= 3) {
+		return (int) (max * 0.95);
+	} else if (reps <= 5) {
+		return (int) (max * 0.90);
+	} else if (reps <= 8) {
+		return (int) (max * 0.80);
+	} else if (reps <= 12) {
+		return (int) (max * 0.75);
+	} else if (reps <= 20) {
+		return (int) (max * 0.60);
+	}
+	return 0;
+}
+
+char** tokenize_input(char* input) {
+	char *pch;
+	char** arr = malloc(sizeof(char*) * 5);
+	if (arr == NULL) {
+		exit(EXIT_FAILURE);
+	}
+	int i = 0;
+    pch = strtok(input," ");
+    while (pch != NULL) {
+        arr[i] = pch;
+        pch = strtok(NULL, " ");
+		i++;
+    }
+	arr[4] = "\n";
+	return arr;
 }
 
 int* read_maxes() {
