@@ -28,5 +28,7 @@ determines recommended weight and repetitions for a given exercise
 
 ### Setup
 
+#### Linux
+
 + Just download the liftspl executable and run it with ./liftspl in the directory
 you place it in.
