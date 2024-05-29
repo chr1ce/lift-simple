@@ -144,11 +144,11 @@ int what_weight(int max, int reps) {
 	if (reps <= 1) {
 		return (int) (max * 1.05);
 	} else if (reps <= 3) {
-		return (int) (max * 0.95);
-	} else if (reps <= 5) {
 		return (int) (max * 0.90);
-	} else if (reps <= 8) {
+	} else if (reps <= 5) {
 		return (int) (max * 0.85);
+	} else if (reps <= 8) {
+		return (int) (max * 0.80);
 	} else if (reps <= 12) {
 		return (int) (max * 0.75);
 	} else if (reps <= 20) {
