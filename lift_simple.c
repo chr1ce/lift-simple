@@ -141,7 +141,9 @@ int main() {
 }
 
 int what_weight(int max, int reps) {
-	if (reps <= 3) {
+	if (reps <= 1) {
+		return (int) (max * 1.05);
+	} else if (reps <= 3) {
 		return (int) (max * 0.95);
 	} else if (reps <= 5) {
 		return (int) (max * 0.90);
