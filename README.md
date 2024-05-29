@@ -32,5 +32,3 @@ determines recommended weight and repetitions for a given exercise
 
 + Just download the liftspl executable and run it with ./liftspl in the directory
 you place it in.
-	+ To use the program anywhere with the command $liftspl, you can add the executable
-   	to your path.
