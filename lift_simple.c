@@ -39,16 +39,21 @@ int main() {
 			clear();
 		}
 
-		// Input data buffer for storage
 
+		// Buffer for input for individual commands
 		char data[30];
-		char input_wkt[5];
+
 		enum Workout workout;
 		char input_copy[20];
 		strcpy(input_copy, input);
 		
-
 		char** input_tokens = tokenize_input(input_copy);
+		int input_size = 0;
+		int i = 0;
+		while (strcmp(input_tokens[i], "\n") != 0) {
+			i++;
+			input_size++;
+		}
 
 
 		if (strcmp(input, "help") == 0) {
@@ -57,9 +62,10 @@ int main() {
 			printw("\nCurrent commands:\n"
 				"help: Help and documentation\n"
 				"quit: Quit the application immediately\n"
+				"clear: Clear the screen\n"
 				"w: Workout data management and information\n"
 				"w add {wkt}: Add specified workout type to storage\n"\
-				"w rec {wkt} {reps}: Get recommended weight for workout"
+				"w rec {wkt} {reps}: Get recommended weight for workout\n"
 				"{wkt}: View max weight for specified workout\n"
 				"\nWorkout types:\n"
 				"dl: Deadlift\n"
@@ -69,17 +75,20 @@ int main() {
 				"ohp: Overhead Press\n");
 				
 		} else if (strncmp(input, "w add", 5) == 0) {
-			for (int i = 0; i < 5; i++) {
-					input_wkt[i] = input[6 + i];
-			}
-			for (int i = 0; i < len_wkts; i++) {				
-				if (strncmp(wkts[i], input_wkt, 5) == 0) {
-					workout = i;
-					printw("\nAdding to: %s", input_wkt);
-					printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
-					getnstr(data, 30);
-					write_workout_to_file(data, workout);
-					break;
+			if (input_size < 3) {
+				printw("\nExpected 3 arguments, %d given.\n", input_size);
+			} else {
+				char* input_workout = input_tokens[2];
+
+				for (int i = 0; i < len_wkts; i++) {				
+					if (strncmp(wkts[i], input_workout, 5) == 0) {
+						workout = i;
+						printw("\nAdding to: %s", input_workout);
+						printw("\nEnter workout data (yyyy-mm-dd, weight, reps): ");
+						getnstr(data, 30);
+						write_workout_to_file(data, workout);
+						break;
+					}
 				}
 			}
 		} else if (strncmp(input, "w rm", 4) == 0) {
@@ -87,20 +96,24 @@ int main() {
 			getnstr(data, 30);
 			// Search through files for workout
 		} else if (strncmp(input, "w rec", 5) == 0) {
-			int reps = atoi(input_tokens[3]);
-			char* input_workout = input_tokens[2];
-			for (int i = 0; i < len_wkts; i++) {				
-				if (strcmp(wkts[i], input_workout) == 0) {
-					workout = i;
-					int* maxarr = read_maxes();
-					int rec_weight = what_weight(maxarr[workout], reps);
-					printw("\nRecommended weight for %d repetitions: ", reps);
-					printw("%d", rec_weight);
-					free(maxarr);
-					break;
+			if (input_size < 4) {
+				printw("\nExpected 4 arguments, %d given.\n", input_size);
+			} else {
+				int reps = atoi(input_tokens[3]);
+				char* input_workout = input_tokens[2];
+				for (int i = 0; i < len_wkts; i++) {				
+					if (strcmp(wkts[i], input_workout) == 0) {
+						workout = i;
+						int* maxarr = read_maxes();
+						int rec_weight = what_weight(maxarr[workout], reps);
+						printw("\nRecommended weight for %d repetitions: ", reps);
+						printw("%d", rec_weight);
+						free(maxarr);
+						break;
+					}
 				}
 			}
-		} else {
+		} else if (input_size == 1) {
 			for (int i = 0; i < len_wkts; i++) {
 				int len_wkt = 3;
 
@@ -114,6 +127,8 @@ int main() {
 					break;
 				}
 			}
+		} else {
+			printw("\nCommand not recognized. Use $help to see command options.\n");
 		}
 
 		refresh();
@@ -131,7 +146,7 @@ int what_weight(int max, int reps) {
 	} else if (reps <= 5) {
 		return (int) (max * 0.90);
 	} else if (reps <= 8) {
-		return (int) (max * 0.80);
+		return (int) (max * 0.85);
 	} else if (reps <= 12) {
 		return (int) (max * 0.75);
 	} else if (reps <= 20) {
@@ -142,7 +157,7 @@ int what_weight(int max, int reps) {
 
 char** tokenize_input(char* input) {
 	char *pch;
-	char** arr = malloc(sizeof(char*) * 5);
+	char** arr = malloc(sizeof(char*) * 10);
 	if (arr == NULL) {
 		exit(EXIT_FAILURE);
 	}
@@ -153,7 +168,7 @@ char** tokenize_input(char* input) {
         pch = strtok(NULL, " ");
 		i++;
     }
-	arr[4] = "\n";
+	arr[i] = "\n";
 	return arr;
 }
 
@@ -167,6 +182,7 @@ int* read_maxes() {
 		FILE* maxesf = fopen("maxes.txt", "a");
 		for (int i = 0; i < len_wkts; i++) {
 			fprintf(maxesf, "0\n");
+			maxarr[i] = 0;
 		}
 		fclose(maxesf);
 	} else {
@@ -194,7 +210,7 @@ int write_maxes(int* maxes) {
 
 char** csv_line_to_arr(char* line) {
 	char *pch;
-	char** arr = malloc(sizeof(char*) * 5);
+	char** arr = malloc(sizeof(char*) * 10);
 	if (arr == NULL) {
 		exit(EXIT_FAILURE);
 	}
@@ -205,7 +221,7 @@ char** csv_line_to_arr(char* line) {
         pch = strtok(NULL, " ,");
 		i++;
     }
-	arr[4] = "\n";
+	arr[i] = "\n";
 	return arr;
 }
 
