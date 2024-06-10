@@ -5,9 +5,6 @@
 + Query for data quickly
 	+ Find how long it has been since your last deadlift PR
 	+ Display your past deadlift workouts
-
-![Screenshot from 2024-06-10 11-07-45](https://github.com/chr1ce/lift-simple/assets/108821220/1b17f148-9396-4a28-8099-ebf3169036f7)
-
 + Assumes knowledge of basic lifting principles
 	+ Will not suggest full workouts
 	+ Will not include features easily found elsewhere
@@ -23,6 +20,12 @@ determines recommended weight and repetitions for a given exercise
 	+ Can set what percent increase you expect to see from yourself
 	+ Can set how many repetitions the exercise should be
 
+#### Usage example
+
+
+![image](https://github.com/chr1ce/lift-simple/assets/108821220/572c5c1c-3214-48aa-99d8-e1adb196c229)
+
+
 ### Uses ncurses library in C
 
 + Cozy environment in terminal
@@ -35,3 +38,5 @@ determines recommended weight and repetitions for a given exercise
 
 + Just download the liftspl executable and run it with ./liftspl in the directory
 you place it in.
+
+ ![image](https://github.com/chr1ce/lift-simple/assets/108821220/771660a6-599f-4a1c-8301-7d3b202283cd)
