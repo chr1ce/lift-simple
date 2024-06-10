@@ -23,6 +23,9 @@ determines recommended weight and repetitions for a given exercise
 #### Usage example
 
 
+ ![image](https://github.com/chr1ce/lift-simple/assets/108821220/771660a6-599f-4a1c-8301-7d3b202283cd)
+
+
 ![image](https://github.com/chr1ce/lift-simple/assets/108821220/40f7329f-fb1f-44d5-9007-df149447468a)
 
 
@@ -39,4 +42,4 @@ determines recommended weight and repetitions for a given exercise
 + Just download the liftspl executable and run it with ./liftspl in the directory
 you place it in.
 
- ![image](https://github.com/chr1ce/lift-simple/assets/108821220/771660a6-599f-4a1c-8301-7d3b202283cd)
+![image](https://github.com/chr1ce/lift-simple/assets/108821220/5318d96b-c874-48e4-92d2-4f7dacd3d31c)
