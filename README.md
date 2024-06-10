@@ -23,7 +23,7 @@ determines recommended weight and repetitions for a given exercise
 #### Usage example
 
 
-![image](https://github.com/chr1ce/lift-simple/assets/108821220/572c5c1c-3214-48aa-99d8-e1adb196c229)
+![image](https://github.com/chr1ce/lift-simple/assets/108821220/40f7329f-fb1f-44d5-9007-df149447468a)
 
 
 ### Uses ncurses library in C
