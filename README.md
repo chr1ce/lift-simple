@@ -31,7 +31,7 @@ determines recommended weight and repetitions for a given exercise
 ![image](https://github.com/chr1ce/lift-simple/assets/108821220/40f7329f-fb1f-44d5-9007-df149447468a)
 
 + Data is saved, and will be consistent between sessions
-+ Ask for a weight recommendation for a certain number of reps
++ Ask for a weight recommendation for a certain number of repetitions
   	+ It's OK if you forget the syntax, $help is always available and concise
 
 ![image](https://github.com/chr1ce/lift-simple/assets/108821220/d65d4e3d-9dc0-46e2-ac56-025aa1449281)
