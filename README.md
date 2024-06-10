@@ -5,6 +5,9 @@
 + Query for data quickly
 	+ Find how long it has been since your last deadlift PR
 	+ Display your past deadlift workouts
+
+![Screenshot from 2024-06-10 11-07-45](https://github.com/chr1ce/lift-simple/assets/108821220/1b17f148-9396-4a28-8099-ebf3169036f7)
+
 + Assumes knowledge of basic lifting principles
 	+ Will not suggest full workouts
 	+ Will not include features easily found elsewhere
