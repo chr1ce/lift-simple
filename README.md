@@ -22,11 +22,17 @@ determines recommended weight and repetitions for a given exercise
 
 #### Usage example
 
++ Use the $help command to see command options and syntax
 
  ![image](https://github.com/chr1ce/lift-simple/assets/108821220/771660a6-599f-4a1c-8301-7d3b202283cd)
 
+ + Check current max or add a recent lift
 
 ![image](https://github.com/chr1ce/lift-simple/assets/108821220/40f7329f-fb1f-44d5-9007-df149447468a)
+
++ Data is saved, and will be consistent between sessions
++ Ask for a weight recommendation for a certain number of reps
+  	+ It's OK if you forget the syntax, $help is always available and concise
 
 ![image](https://github.com/chr1ce/lift-simple/assets/108821220/d65d4e3d-9dc0-46e2-ac56-025aa1449281)
 
