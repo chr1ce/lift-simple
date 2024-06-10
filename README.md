@@ -28,6 +28,7 @@ determines recommended weight and repetitions for a given exercise
 
 ![image](https://github.com/chr1ce/lift-simple/assets/108821220/40f7329f-fb1f-44d5-9007-df149447468a)
 
+![image](https://github.com/chr1ce/lift-simple/assets/108821220/d65d4e3d-9dc0-46e2-ac56-025aa1449281)
 
 ### Uses ncurses library in C
 
