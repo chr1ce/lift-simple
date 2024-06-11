@@ -15,7 +15,7 @@
 		+ Command-line functioning, no ads, no subscription,
 		data stored in a file on your machine
 + No guessing what intensity you need to work at
-+ Given an understanding of past workouts and days between them,
++ Given an understanding of past workouts,
 determines recommended weight and repetitions for a given exercise
 	+ Can set what percent increase you expect to see from yourself
 	+ Can set how many repetitions the exercise should be
