@@ -49,7 +49,7 @@ determines recommended weight and repetitions for a given exercise
 + Just download the liftspl executable and run it with ./liftspl in the directory
 you place it in.
 
-### Windows
+#### Windows
 
 + WSL, the Windows Subsystem for Linux, can be used to run the executable.
 
