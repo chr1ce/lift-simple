@@ -4,7 +4,7 @@
 
 + Query for data quickly
 	+ Find how long it has been since your last deadlift PR
-	+ Display your past deadlift workouts
+	+ Store your past deadlift workouts
 + Assumes knowledge of basic lifting principles
 	+ Will not suggest full workouts
 	+ Will not include features easily found elsewhere
