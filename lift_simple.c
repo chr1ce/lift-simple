@@ -63,7 +63,6 @@ int main() {
 				"help: Help and documentation\n"
 				"quit: Quit the application immediately\n"
 				"clear: Clear the screen\n"
-				"w: Workout data management and information\n"
 				"w add {wkt}: Add specified workout type to storage\n"\
 				"w rec {wkt} {reps}: Get recommended weight for workout\n"
 				"{wkt}: View max weight for specified workout\n"
