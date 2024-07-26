@@ -8,6 +8,6 @@
 
 ### In progress
 
-+ Add proper error handling (major: "expected %d arguments" and "not a command")
-
 ### Done
+
++ Add proper error handling (major: "expected %d arguments" and "not a command")

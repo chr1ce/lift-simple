@@ -1,3 +1,6 @@
+#ifndef LIFT_SIMPLE_H
+#define LIFT_SIMPLE_H
+
 #include <string.h>
 
 int main(void);
@@ -24,3 +27,5 @@ int write_maxes(int* maxes);
 const char* help_intro_str = "\nEach workout is represented by a 2-3 letter string."
                              "\nWorkout recommendation assumes your heaviest lift is a ORM."
                              "\nCommands are given below.\n";
+
+#endif
